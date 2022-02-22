@@ -3,6 +3,7 @@ services:
   hash:
     image: 'spai22/hashapi'
     command: bash -c "gunicorn --bind 0.0.0.0:5000 wsgi:app --daemon && gunicorn --bind 0.0.0.0:8090 main:app -k uvicorn.workers.UvicornWorker"
+    restart: unless-stopped
     ports:
       - "5000:5000"
       - "8090:8090"
