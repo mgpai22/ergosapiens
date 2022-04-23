@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  hash:
+    image: 'spai22/ergopay'
+    restart: unless-stopped
+    ports:
+      - "8085:8085"
