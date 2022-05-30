@@ -50,13 +50,13 @@ def getHash():
     return hashData
 
 
-@app.get("/{hashFileCmd}/{hash_to_check}")
+@app.get("/" + str(hashFileCmd) + "/" + "{hash_to_check}")
 async def checkValidity(hash_to_check: str):
     validity = sqlFunctions.validateHash(hash_to_check)
     return {"Validity": validity}
 
 
-@app.get("/thash")
+@app.get("/test/hash")
 def getHashTest():
     hash = hasher()
     sqlFunctions.writeToHashTest(hash)
@@ -64,13 +64,13 @@ def getHashTest():
     return hashData
 
 
-@app.get("/test/{hashFileCmd}/{hash_to_check}")
+@app.get("/test/" + str(hashFileCmd) + "/{hash_to_check}")
 async def checkValidityTest(hash_to_check: str):
     validity = sqlFunctions.validateHashTest(hash_to_check)
     return {"Validity": validity}
 
 
-@app.get("/{test_hash_to_add}")
+@app.get("/test/add/{test_hash_to_add}")
 async def addHashTest(test_hash_to_add: str):
     try:
         sqlFunctions.writeToHashTest(test_hash_to_add)
