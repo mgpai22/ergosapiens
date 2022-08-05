@@ -29,10 +29,10 @@ public class ErgoPayController {
                 RestApiErgoClient.getDefaultExplorerUrl(networkType)
         ).execute(ctx -> {
 
-            List<InputBox> boxesToSpend = BoxOperations.createForSender(sender)
+            List<InputBox> boxesToSpend = BoxOperations.createForSender(sender, ctx)
                     .withAmountToSpend(amountToSpend)
                     .withTokensToSpend(tokensToSpend)
-                    .loadTop(ctx);
+                    .loadTop();
 
             P2PKAddress changeAddress = sender.asP2PK();
             UnsignedTransactionBuilder txB = ctx.newTxBuilder();
@@ -67,8 +67,9 @@ public class ErgoPayController {
 
             byte[] reduced = getReducedTx(isMainNet, amountToSend, Collections.emptyList(), sender,
                     unsignedTxBuilder -> {
+                        NetworkType networkType = isMainNet ? NetworkType.MAINNET : NetworkType.TESTNET;
 
-                        ErgoTreeContract contract = new ErgoTreeContract(recipient.getErgoAddress().script());
+                        ErgoTreeContract contract = new ErgoTreeContract(recipient.getErgoAddress().script(), networkType);
 
                         OutBoxBuilder outBoxBuilder = unsignedTxBuilder.outBoxBuilder()
                                 .value(amountToSend)
@@ -116,7 +117,10 @@ public class ErgoPayController {
             byte[] reduced = getReducedTx(isMainNet, amountToSend, Collections.emptyList(), sender,
                     unsignedTxBuilder -> {
 
-                        ErgoTreeContract contract = new ErgoTreeContract(recipient.getErgoAddress().script());
+                        NetworkType networkType = isMainNet ? NetworkType.MAINNET : NetworkType.TESTNET;
+
+
+                        ErgoTreeContract contract = new ErgoTreeContract(recipient.getErgoAddress().script(), networkType);
 
                         OutBoxBuilder outBoxBuilder = unsignedTxBuilder.outBoxBuilder()
                                 .value(amountToSend)
