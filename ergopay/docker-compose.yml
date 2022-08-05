@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   hash:
-    buils: .
+    build: .
     restart: unless-stopped
     ports:
       - "8085:8085"
