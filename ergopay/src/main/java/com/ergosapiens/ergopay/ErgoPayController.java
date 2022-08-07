@@ -88,6 +88,7 @@ public class ErgoPayController {
             response.address = address;
             response.message = "Do not send. Your payment identifier is: " + ref;
             response.messageSeverity = ErgoPayResponse.Severity.INFORMATION;
+            response.replyTo = String.format("https://ergopay.ergosapiens.com/txId?param=%s", ref);
 
         } catch (Throwable t) {
             response.messageSeverity = ErgoPayResponse.Severity.ERROR;
@@ -139,6 +140,7 @@ public class ErgoPayController {
             response.address = address;
             response.message = "Your payment identifier is: " + ref + ". Make sure to save it!";
             response.messageSeverity = ErgoPayResponse.Severity.INFORMATION;
+            response.replyTo = String.format("https://ergopay.ergosapiens.com/txId?param=%s", ref);
 
         } catch (Throwable t) {
             response.messageSeverity = ErgoPayResponse.Severity.ERROR;
